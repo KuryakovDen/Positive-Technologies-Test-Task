@@ -1,7 +1,7 @@
 'use strict';
 
 const onSuccess = (curRates) => {
-  const CONVERT_DOLLAR_TO_CURRENCIES = {
+  const ExchangeRates = {
     'rubles': curRates.rub.rate.toFixed(2), 
     'euros': curRates.eur.rate.toFixed(2), 
     'pounds': curRates.gbp.rate.toFixed(2), 
@@ -17,13 +17,13 @@ const onSuccess = (curRates) => {
   
   document.write(`Кол-во товаров в корзине: <b> ${selectedCart.length} </b> <br><br>`);
 
-  const printProductCost = (products) => {
+  const calculateProductCost = (products) => {
     products.forEach((it, i) => {
-      document.write(`Стоимость ${i + 1}-го товара: <b> ${products[i].price} &#36; </b> <br>`);
+      document.write(`Стоимость ${i + 1}-го товара: <b> ${products[i].price} &#36; </b> <br><br>`);
     });
   };
 
-  printProductCost(selectedCart);
+  calculateProductCost(selectedCart);
   
   const totalCartSum = [];
   
@@ -36,18 +36,18 @@ const onSuccess = (curRates) => {
   const totalCartPrice = {};
   
   totalCartPrice.dollars = totalDollarsSum;
-  totalCartPrice.rubles = Math.floor(totalDollarsSum * CONVERT_DOLLAR_TO_CURRENCIES.rubles);
-  totalCartPrice.euros = Math.floor(totalDollarsSum * CONVERT_DOLLAR_TO_CURRENCIES.euros);
-  totalCartPrice.pounds = Math.floor(totalDollarsSum * CONVERT_DOLLAR_TO_CURRENCIES.pounds);
-  totalCartPrice.yens = Math.floor(totalDollarsSum * CONVERT_DOLLAR_TO_CURRENCIES.yens);
+  totalCartPrice.rubles = Math.floor(totalDollarsSum * ExchangeRates.rubles);
+  totalCartPrice.euros = Math.floor(totalDollarsSum * ExchangeRates.euros);
+  totalCartPrice.pounds = Math.floor(totalDollarsSum * ExchangeRates.pounds);
+  totalCartPrice.yens = Math.floor(totalDollarsSum * ExchangeRates.yens);
   
-  const printCostOtherRates = (cartPrice) => {
+  const calculateCostOtherRates = (cartPrice) => {
     for (const cur in cartPrice) {
       document.write(`Общая стоимость всех товаров в корзине составляет <b> ${cartPrice[cur]} ${cur} </b> <br>`);
     }
   };
 
-  printCostOtherRates(totalCartPrice);
+  calculateCostOtherRates(totalCartPrice);
 }
 
 const onError = (messege = `Error!`) => document.write(messege);
